@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+#file is all lowercase
+from pythonds.graphs import PriorityQueue, Vertex, Graph
+import fileinput
+def main():
+     #file opening
+     alphabet = "abcdefghijklmnopqrstuvwxyz"
+     #file parsing
+     word = []
+     for line in fileinput.input():
+          x = line.strip()
+          t = x.lower()
+          word.append(t)
+     fileinput.close()
+     g = Graph()     
+     for i in word:
+          vertlist = g.getVertices()
+          if i not in vertlist:
+               g.addVertex(i)
+          #vert0 = g.getVertex(i)
+          fhalf = shalf = []
+          tmp = []
+          
+          for idx,ch in enumerate(i):
+               l = list(i)
+               for a in alphabet:
+                    l[idx] = a
+                    final = "".join(l)
+                    if final in word and final not in vertlist:
+                         g.addVertex(final)
+                         vertlist = g.getVertices()
+                    if final in word and final in vertlist:
+                         #vert1 = g.getVertex(final)
+                         g.addEdge(i, final)                     
+                         g.addEdge(final, i)
+          go = g.getVertex(i)
+          s = go.getConnections()
+          print i, len(s)
+
+     return 0
+
+
+if __name__ == "__main__":
+     main()
